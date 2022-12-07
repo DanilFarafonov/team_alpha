@@ -1,8 +1,3 @@
-#!pip install transformers scipy ftfy diffusers
-#!pip install matplotlib
-#pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu116
-#pip install accelerate
-
 from diffusers import StableDiffusionPipeline
 import torch
 import streamlit as st
@@ -23,9 +18,7 @@ def generate_image(pipe, text):
     image.save(image_path)
     return image_path
 
-#######pipe = model_load()
-
-image_test = st.file_uploader()
+image_test = st.file_uploader('Just for testing')
 
 # title
 st.title('TEAM ALPHA')
