@@ -37,17 +37,15 @@ if but_make_pallete:
     st.subheader('Generated Image')
     st.image(image)
 
-    # download button
-    but_down = st.download_button('Download Image', image)
-
     # getting colors from image
-    colors = colour_identifier.colorz(image, 5)
+    colors = list(colour_identifier.colorz(image, color_count))
 
-    # print colors
-    colors_str = ''
-    for col in colors:
-        colors_str += col + ' '
-    st.text(colors_str)
+    # display colors
+    columns = st.columns(color_count)
+    for index in range(color_count):
+        with columns[index]:
+            st.color_picker(label=colors[index], value=colors[index], disabled=True)
+
 
 
 
