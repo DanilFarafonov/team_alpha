@@ -1,3 +1,7 @@
 streamlit
-transformers scipy ftfy diffusers
-pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu116
+transformers
+scipy
+ftfy
+diffusers
+accelerate
+torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu116
