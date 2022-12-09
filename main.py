@@ -36,9 +36,6 @@ if but_make_pallete:
     st.subheader('Generated Image')
     st.image(image)
 
-    # download button
-    but_down = st.download_button('Download Image', image)
-
     # getting colors from image
     colors = list(colour_identifier.colorz(image, color_count))
 
