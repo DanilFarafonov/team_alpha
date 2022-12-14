@@ -4,4 +4,6 @@ scipy
 ftfy
 diffusers
 accelerate
-torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu116
+torch --extra-index-url https://download.pytorch.org/whl/cu116
+torchvision --extra-index-url https://download.pytorch.org/whl/cu116
+torchaudio --extra-index-url https://download.pytorch.org/whl/cu116
