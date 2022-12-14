@@ -21,6 +21,12 @@ def get_points(img):
 rtoh = lambda rgb: '#%s' % ''.join(('%02x' % p for p in rgb))
 
 def colorz(filename, n=3):
+    """Returns a list of colors.
+
+        Keyword arguments:
+        filename -- input image
+        n -- number of colors to find (default 3)
+        """
     img = Image.open(filename)
     img.thumbnail((200, 200))
     w, h = img.size
