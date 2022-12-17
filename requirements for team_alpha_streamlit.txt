@@ -1,0 +1,9 @@
+streamlit
+transformers
+scipy
+ftfy
+diffusers
+accelerate
+torch --extra-index-url https://download.pytorch.org/whl/cu116
+torchvision --extra-index-url https://download.pytorch.org/whl/cu116
+torchaudio --extra-index-url https://download.pytorch.org/whl/cu116
