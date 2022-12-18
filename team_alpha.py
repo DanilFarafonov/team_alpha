@@ -50,4 +50,4 @@ with gr.Blocks() as palette_generator:
 
     btn.click(generate_color_table, inputs=[seed, palette_size, mdjrny], outputs=[palette])
 
-palette_generator.launch()
+palette_generator.launch(server_name='0.0.0.0')
