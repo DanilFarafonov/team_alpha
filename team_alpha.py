@@ -1,9 +1,6 @@
 import gradio as gr
 import colour_identifier
 
-
-picture_gen = gr.Blocks.load(name='models/prompthero/openjourney')    # Stable Diffusion model for image generation
-
 def generate_image(text, mdjrny):
     # "mdjrny" to add prompthero/openjourney prompt
     if mdjrny:
@@ -29,25 +26,28 @@ def generate_color_table(text='Apples', palette_size=4, mdjrny=False):
     '''Color table <- List of color names <- Generated image'''
     return color_table(make_palette(generate_image(text, mdjrny), palette_size))
 
-with gr.Blocks() as palette_generator:
-    with gr.Row():
+if __name__ == '__main__':
+    picture_gen = gr.Blocks.load(name='models/prompthero/openjourney')  # Stable Diffusion model for image generation
 
-        with gr.Column(scale=1):
-            pass
+    with gr.Blocks() as palette_generator:
+        with gr.Row():
 
-        with gr.Column(scale=2):
-            gr.Markdown('''## <p style="text-align: center;">TEAM ALPHA</p>
-            ### <p style="text-align: center;">Color palette for any occasion</p>''')
-            palette = gr.Markdown()
-            seed = gr.Text(label='Input your prompt:')
-            palette_size = gr.Slider(3, 6, value=4, step=1, label='Choose palette size:')
-            mdjrny = gr.Checkbox(label='In Openjourney style')
-            btn = gr.Button('Generate palette')
-            gr.Examples(['Cold autumn morning', 'Lonely birthday party', 'Good day for muffins'], inputs=[seed])
+            with gr.Column(scale=1):
+                pass
 
-        with gr.Column(scale=1):
-            pass
+            with gr.Column(scale=2):
+                gr.Markdown('''## <p style="text-align: center;">TEAM ALPHA</p>
+                ### <p style="text-align: center;">Color palette for any occasion</p>''')
+                palette = gr.Markdown()
+                seed = gr.Text(label='Input your prompt:')
+                palette_size = gr.Slider(3, 6, value=4, step=1, label='Choose palette size:')
+                mdjrny = gr.Checkbox(label='In Openjourney style')
+                btn = gr.Button('Generate palette')
+                gr.Examples(['Cold autumn morning', 'Lonely birthday party', 'Good day for muffins'], inputs=[seed])
 
-    btn.click(generate_color_table, inputs=[seed, palette_size, mdjrny], outputs=[palette])
+            with gr.Column(scale=1):
+                pass
 
-palette_generator.launch(server_name='0.0.0.0')
+        btn.click(generate_color_table, inputs=[seed, palette_size, mdjrny], outputs=[palette])
+
+    palette_generator.launch(server_name='0.0.0.0')
