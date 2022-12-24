@@ -1,79 +1,55 @@
-# source: https://habr.com/ru/post/156045/
+# source: //github.com/mushahidq/py_colour_identifier/blob/main/colour_identifier.ipynb
 
-from collections import namedtuple
-from math import sqrt
-import random
-try:
-    import Image
-except ImportError:
-    from PIL import Image
+# Import libraries
+from sklearn.cluster import KMeans
+import matplotlib.pyplot as plt
+import cv2
+from collections import Counter
 
-Point = namedtuple('Point', ('coords', 'n', 'ct'))
-Cluster = namedtuple('Cluster', ('points', 'center', 'n'))
+#Display the output of matplotlib inline
+#%matplotlib inline
 
-def get_points(img):
-    points = []
-    w, h = img.size
-    for count, color in img.getcolors(w * h):
-        points.append(Point(color, 3, count))
-    return points
+# Reading Images
+def get_img(img_path):
+    img = cv2.imread(img_path)
+    #Information about how the image is stored
+    #print("The image is stored as {}".format(type(img)))
+    #print("The shape of the numpy array that stores the image is {}".format(img.shape))
+    #print("The image is:")
+    #plt.imshow(img)
+    #Convert the image to original colors i.e. RGB
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    plt.imshow(img)
+    return img
 
-rtoh = lambda rgb: '#%s' % ''.join(('%02x' % p for p in rgb))
+#Define the HEX values of colours
+def RGB2HEX(color):
+    return "#{:02x}{:02x}{:02x}".format(int(color[0]), int(color[1]), int(color[2]))
 
-def colorz(filename, n=3):
-    """Returns a list of colors.
+#Returns the colours in the image
+def get_colours(img_path, no_of_colours, show_chart):
+    img = get_img(img_path)
+    #Reduce image size to reduce the execution time
+    mod_img = cv2.resize(img, (600, 400), interpolation=cv2.INTER_AREA)
+    #Reduce the input to two dimensions for KMeans
+    mod_img = mod_img.reshape(mod_img.shape[0]*mod_img.shape[1], 3)
 
-        Keyword arguments:
-        filename -- input image
-        n -- number of colors to find (default 3)
-        """
-    img = Image.open(filename)
-    img.thumbnail((200, 200))
-    w, h = img.size
+    #Define the clusters
+    clf = KMeans(n_clusters = no_of_colours, n_init = no_of_colours)
+    labels = clf.fit_predict(mod_img)
 
-    points = get_points(img)
-    clusters = kmeans(points, n, 1)
-    rgbs = [map(int, c.center.coords) for c in clusters]
-    return map(rtoh, rgbs)
+    counts = Counter(labels)
+    counts = dict(sorted(counts.items()))
 
-def euclidean(p1, p2):
-    return sqrt(sum([
-        (p1.coords[i] - p2.coords[i]) ** 2 for i in range(p1.n)
-    ]))
+    center_colours = clf.cluster_centers_
+    ordered_colours = [center_colours[i] for i in counts.keys()]
+    hex_colours = [RGB2HEX(ordered_colours[i]) for i in counts.keys()]
+    rgb_colours = [ordered_colours[i] for i in counts.keys()]
 
-def calculate_center(points, n):
-    vals = [0.0 for i in range(n)]
-    plen = 0
-    for p in points:
-        plen += p.ct
-        for i in range(n):
-            vals[i] += (p.coords[i] * p.ct)
-    return Point([(v / plen) for v in vals], n, 1)
-
-def kmeans(points, k, min_diff):
-    clusters = [Cluster([p], p, p.n) for p in random.sample(points, k)]
-
-    while 1:
-        plists = [[] for i in range(k)]
-
-        for p in points:
-            smallest_distance = float('Inf')
-            for i in range(k):
-                distance = euclidean(p, clusters[i].center)
-                if distance < smallest_distance:
-                    smallest_distance = distance
-                    idx = i
-            plists[idx].append(p)
-
-        diff = 0
-        for i in range(k):
-            old = clusters[i]
-            center = calculate_center(plists[i], old.n)
-            new = Cluster(plists[i], center, old.n)
-            clusters[i] = new
-            diff = max(diff, euclidean(old.center, new.center))
-
-        if diff < min_diff:
-            break
-
-    return clusters
+    if (show_chart):
+        plt.figure(figsize = (8, 6))
+        plt.pie(counts.values(), labels=hex_colours, colors=hex_colours)
+        plt.show()
+        return
+    else:
+        return hex_colours
