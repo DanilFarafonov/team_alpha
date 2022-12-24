@@ -12,14 +12,8 @@ from collections import Counter
 # Reading Images
 def get_img(img_path):
     img = cv2.imread(img_path)
-    #Information about how the image is stored
-    #print("The image is stored as {}".format(type(img)))
-    #print("The shape of the numpy array that stores the image is {}".format(img.shape))
-    #print("The image is:")
-    #plt.imshow(img)
     #Convert the image to original colors i.e. RGB
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    plt.imshow(img)
     return img
 
 #Define the HEX values of colours
