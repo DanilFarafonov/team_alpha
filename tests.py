@@ -13,28 +13,28 @@ def test_generate_image():
 
 def test_make_palette():
     # test that colors are correctly determined on test images
-    assert set(team_alpha.make_palette('test images/1.png', 1)) == {'#ffffff'}
-    assert set(team_alpha.make_palette('test images/2.png', 2)) == {'#000000', '#ffffff'}
-    assert set(team_alpha.make_palette('test images/3.png', 3)) == {'#aded02', '#02ee08', '#02f5c5'}
-    assert set(team_alpha.make_palette('test images/4.png', 4)) == {'#99d8e9', '#00a3e7', '#0c2adc', '#7091be'}
-    assert set(team_alpha.make_palette('test images/5.png', 5)) == {'#f71b0f', '#f49940', '#fef534', '#f9ca3c', '#ec5318'}
-    assert set(team_alpha.make_palette('test images/6.png', 6)) == {'#0383f5', '#f80e19', '#ed03dc', '#fa0c83', '#b80bfa', '#0a03f5'}
+    assert set(team_alpha.make_palette('test_files/1.png', 1)) == {'#ffffff'}
+    assert set(team_alpha.make_palette('test_files/2.png', 2)) == {'#000000', '#ffffff'}
+    assert set(team_alpha.make_palette('test_files/3.png', 3)) == {'#aded02', '#02ee08', '#02f5c5'}
+    assert set(team_alpha.make_palette('test_files/4.png', 4)) == {'#99d8e9', '#00a3e7', '#0c2adc', '#7091be'}
+    assert set(team_alpha.make_palette('test_files/5.png', 5)) == {'#f71b0f', '#f49940', '#fef534', '#f9ca3c', '#ec5318'}
+    assert set(team_alpha.make_palette('test_files/6.png', 6)) == {'#0383f5', '#f80e19', '#ed03dc', '#fa0c83', '#b80bfa', '#0a03f5'}
 
     # when request more colors than are in the image
     with pytest.warns(ConvergenceWarning):
-        team_alpha.make_palette('test images/1.png', 2)
+        team_alpha.make_palette('test_files/1.png', 2)
 
     # when instead of an image we transfer a file of another extension or nothing
     with pytest.raises(cv2.error):
         team_alpha.make_palette('', 1)
-        team_alpha.make_palette('test images/text.txt', 1)
+        team_alpha.make_palette('test_files/text.txt', 1)
 
     # when setting an unplanned palette size
     with pytest.raises(InvalidParameterError):
-        team_alpha.make_palette('test images/1.png', 0)
-        team_alpha.make_palette('test images/1.png', 2.5)
-        team_alpha.make_palette('test images/1.png', -3)
-        team_alpha.make_palette('test images/1.png', '2')
+        team_alpha.make_palette('test_files/1.png', 0)
+        team_alpha.make_palette('test_files/1.png', 2.5)
+        team_alpha.make_palette('test_files/1.png', -3)
+        team_alpha.make_palette('test_files/1.png', '2')
 
 def test_color_table():
     colors = ['#000000', '#ffffff']
