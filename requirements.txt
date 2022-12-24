@@ -1,1 +1,5 @@
 gradio
+scikit-learn
+opencv-python
+matplotlib
+scikit-image
