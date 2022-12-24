@@ -14,10 +14,10 @@ def test_make_palette():
     # test that colors are correctly determined on test images
     assert set(team_alpha.make_palette('test_files/1.png', 1)) == {'#ffffff'}
     assert set(team_alpha.make_palette('test_files/2.png', 2)) == {'#000000', '#ffffff'}
-    assert set(team_alpha.make_palette('test_files/3.png', 3)) == {'#aded02', '#02ee08', '#02f5c5'}
-    assert set(team_alpha.make_palette('test_files/4.png', 4)) == {'#99d8e9', '#00a3e7', '#0c2adc', '#7091be'}
-    assert set(team_alpha.make_palette('test_files/5.png', 5)) == {'#f71b0f', '#f49940', '#fef534', '#f9ca3c', '#ec5318'}
-    assert set(team_alpha.make_palette('test_files/6.png', 6)) == {'#0383f5', '#f80e19', '#ed03dc', '#fa0c83', '#b80bfa', '#0a03f5'}
+    assert set(team_alpha.make_palette('test_files/3.png', 3)) == {'#6cb368', '#47fa38', '#52faa6'}
+    assert set(team_alpha.make_palette('test_files/4.png', 4)) == {'#3f48cc', '#00a2e8', '#7092be', '#99d9ea'}
+    assert set(team_alpha.make_palette('test_files/5.png', 5)) == {'#ed1b24', '#f03f2b', '#f8b823', '#f47d26', '#fff200'}
+    assert set(team_alpha.make_palette('test_files/6.png', 6)) == {'#ed1c24', '#1d2ded', '#ed1db9', '#761feb', '#c41ded', '#1d85ed'}
 
     # when request more colors than are in the image
     with pytest.warns(ConvergenceWarning):
