@@ -1,5 +1,5 @@
 import gradio as gr
-import colour_identifier
+import color_identifier
 
 def generate_image(text, mdjrny):
     # "mdjrny" to add prompthero/openjourney prompt
@@ -8,7 +8,7 @@ def generate_image(text, mdjrny):
     return picture_gen(text)
 
 def make_palette(image, palette_size):
-    return list(colour_identifier.get_colours(image, palette_size, False))
+    return list(color_identifier.get_colours(image, palette_size, False))
 
 def color_table(colors):
     '''Get a color table from a list of color names for Markdown as such:
