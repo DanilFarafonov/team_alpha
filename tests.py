@@ -7,9 +7,8 @@ import gradio as gr
 
 def test_generate_image():
     # test that jpeg extension image has been generated
-    with pytest.warns(DeprecationWarning):
-        team_alpha.picture_gen = gr.Blocks.load(name='models/prompthero/openjourney')
-        assert team_alpha.generate_image('test', False)[-4:] == '.jpg'
+    team_alpha.picture_gen = gr.Blocks.load(name='models/prompthero/openjourney')
+    assert team_alpha.generate_image('test', False)[-4:] == '.jpg'
 
 def test_make_palette():
     # test that colors are correctly determined on test images
