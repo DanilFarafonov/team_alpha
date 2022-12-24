@@ -24,7 +24,7 @@ def RGB2HEX(color):
 def get_colours(img_path, no_of_colours, show_chart):
     img = get_img(img_path)
     #Reduce image size to reduce the execution time
-    mod_img = cv2.resize(img, (600, 400), interpolation=cv2.INTER_AREA)
+    mod_img = cv2.resize(img, (512, 512), interpolation=cv2.INTER_AREA)
     #Reduce the input to two dimensions for KMeans
     mod_img = mod_img.reshape(mod_img.shape[0]*mod_img.shape[1], 3)
 
@@ -41,7 +41,7 @@ def get_colours(img_path, no_of_colours, show_chart):
     rgb_colours = [ordered_colours[i] for i in counts.keys()]
 
     if (show_chart):
-        plt.figure(figsize = (8, 6))
+        plt.figure(figsize=(8, 6))
         plt.pie(counts.values(), labels=hex_colours, colors=hex_colours)
         plt.show()
         return
